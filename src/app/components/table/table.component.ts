@@ -4,6 +4,7 @@ import {
   Input,
   Output,
   OnChanges,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { ITableData } from 'src/app/model/user';
 
@@ -13,6 +14,7 @@ type columns = 'firstname' | 'surname' | 'username' | 'email';
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableComponent implements OnChanges {
   @Input() sortColumn: keyof ITableData = 'firstname';

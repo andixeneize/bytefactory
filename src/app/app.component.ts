@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { ApiService } from './services/api.service';
 import { ITableData } from './model/user';
 import { catchError, map } from 'rxjs/operators';
@@ -7,9 +12,10 @@ import { catchError, map } from 'rxjs/operators';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private cdr: ChangeDetectorRef) {}
 
   userList: ITableData[] = [];
   filteredUserList: ITableData[] = [];
@@ -29,23 +35,22 @@ export class AppComponent implements OnInit {
           this.userList = response.map((user: any) => {
             const nameParts = user.name.split(' ');
 
-            // Determinar el índice donde comienza el apellido
             let surnameStartIndex = 1;
             if (
               nameParts.length > 1 &&
               (nameParts[0] === 'Mr.' || nameParts[0] === 'Mrs.')
             ) {
-              surnameStartIndex = 2; // Saltar el prefijo
+              surnameStartIndex = 2;
             }
 
-            // Obtener firstname y surname
             const firstname = nameParts.slice(0, surnameStartIndex).join(' ');
             const surname = nameParts.slice(surnameStartIndex).join(' ');
 
             return { ...user, firstname, surname };
           });
 
-          this.filteredUserList = this.userList;
+          // Aplicar el filtro inicial
+          this.applyFiltersAndSorting();
         }),
         catchError((error) => {
           console.error('Error al obtener la lista de usuarios:', error);
@@ -61,12 +66,11 @@ export class AppComponent implements OnInit {
         user.firstname.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         user.surname.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
-
     this.sortUsers();
+    this.cdr.detectChanges();
   }
 
   onSearchTermChange(searchTerm: string): void {
-    console.log('searchTerm: ', searchTerm);
     this.searchTerm = searchTerm;
     this.applyFiltersAndSorting();
   }

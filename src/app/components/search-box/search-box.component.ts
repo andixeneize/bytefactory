@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-search-box',
   templateUrl: './search-box.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchBoxComponent  {
   @Output() searchTermChange: EventEmitter<string> = new EventEmitter<string>();
