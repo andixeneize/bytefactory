@@ -1,9 +1,12 @@
-import { Component, Input, OnChanges } from '@angular/core';
-
-export interface ITableData extends Pick<any, 'id' | 'username' | 'email'> {
-  firstname: string;
-  surname: string;
-}
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  OnChanges,
+  ChangeDetectionStrategy,
+} from '@angular/core';
+import { ITableData } from 'src/app/model/user';
 
 type columns = 'firstname' | 'surname' | 'username' | 'email';
 
@@ -11,19 +14,29 @@ type columns = 'firstname' | 'surname' | 'username' | 'email';
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableComponent implements OnChanges {
-  @Input() sortColumn: columns = 'firstname';
+  @Input() sortColumn: keyof ITableData = 'firstname';
   @Input() sortDirection: 'asc' | 'desc' = 'asc';
-
-  data: ITableData[] = [];
+  @Input() data: ITableData[] = [];
+  @Output() sortChange: EventEmitter<{
+    sortColumn: keyof ITableData;
+    sortDirection: 'asc' | 'desc';
+  }> = new EventEmitter<{
+    sortColumn: keyof ITableData;
+    sortDirection: 'asc' | 'desc';
+  }>();
 
   ngOnChanges(): void {
     this.sortData();
   }
 
   private sortData(): void {
-    // @TODO
+    this.sortChange.emit({
+      sortColumn: this.sortColumn,
+      sortDirection: this.sortDirection,
+    });
   }
 
   sortTable(sortColumn: columns): void {

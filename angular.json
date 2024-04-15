@@ -64,10 +64,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "technical-interviews:build:production"
+              "buildTarget": "technical-interviews:build:production"
             },
             "development": {
-              "browserTarget": "technical-interviews:build:development"
+              "buildTarget": "technical-interviews:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -75,7 +75,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "technical-interviews:build"
+            "buildTarget": "technical-interviews:build"
           }
         },
         "test": {
