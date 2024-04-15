@@ -22,28 +22,32 @@ export class AppComponent implements OnInit {
   }
 
   getUsers(): void {
-    this.apiService.getData()
+    this.apiService
+      .getData()
       .pipe(
-        map(response => {
+        map((response) => {
           this.userList = response.map((user: any) => {
             const nameParts = user.name.split(' ');
-  
+
             // Determinar el índice donde comienza el apellido
             let surnameStartIndex = 1;
-            if (nameParts.length > 1 && (nameParts[0] === 'Mr.' || nameParts[0] === 'Mrs.')) {
+            if (
+              nameParts.length > 1 &&
+              (nameParts[0] === 'Mr.' || nameParts[0] === 'Mrs.')
+            ) {
               surnameStartIndex = 2; // Saltar el prefijo
             }
-  
+
             // Obtener firstname y surname
             const firstname = nameParts.slice(0, surnameStartIndex).join(' ');
             const surname = nameParts.slice(surnameStartIndex).join(' ');
-  
+
             return { ...user, firstname, surname };
           });
 
           this.filteredUserList = this.userList;
         }),
-        catchError(error => {
+        catchError((error) => {
           console.error('Error al obtener la lista de usuarios:', error);
           throw error;
         })
@@ -53,17 +57,16 @@ export class AppComponent implements OnInit {
 
   applyFiltersAndSorting(): void {
     this.filteredUserList = this.userList.filter(
-      (user) => {
-        console.log('user: ', user)
+      (user) =>
         user.firstname.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         user.surname.toLowerCase().includes(this.searchTerm.toLowerCase())
-      }
     );
 
     this.sortUsers();
   }
 
   onSearchTermChange(searchTerm: string): void {
+    console.log('searchTerm: ', searchTerm);
     this.searchTerm = searchTerm;
     this.applyFiltersAndSorting();
   }
