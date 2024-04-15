@@ -18,15 +18,15 @@ Se han eliminado ciertas partes del código donde se espera que realices la impl
 
 ### Tareas a realizar:
 
-1) Solucionar las dependencias que están impidiendo que nuestra aplicación se ejecute correctamente.  ok
-2) Implementar la lógica para obtener usuarios. ok
-3) Implementar la lógica para filtrar usuarios. -
-4) Implementar la lógica para ordenar usuarios. -
+1) Solucionar las dependencias que están impidiendo que nuestra aplicación se ejecute correctamente.
+2) Implementar la lógica para obtener usuarios.
+3) Implementar la lógica para filtrar usuarios.
+4) Implementar la lógica para ordenar usuarios.
 
 ### Se valorará:
 
-- Implementación correcta de componentes Smart & Dumb.  ok
-- Uso de tipado fuerte para objetos y variables.  ok
-- Programación reactiva utilizando RxJS.  ok
+- Implementación correcta de componentes Smart & Dumb.
+- Uso de tipado fuerte para objetos y variables.
+- Programación reactiva utilizando RxJS.
 - Optimizaciones para minimizar el redibujado constante del DOM.
-- Buen uso de GIT para la entrega de la solución. ok
+- Buen uso de GIT para la entrega de la solución.
