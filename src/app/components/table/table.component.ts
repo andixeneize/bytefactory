@@ -1,4 +1,10 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  OnChanges,
+} from '@angular/core';
 import { ITableData } from 'src/app/model/user';
 
 type columns = 'firstname' | 'surname' | 'username' | 'email';
@@ -9,17 +15,26 @@ type columns = 'firstname' | 'surname' | 'username' | 'email';
   styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnChanges {
-  @Input() sortColumn: columns = 'firstname';
+  @Input() sortColumn: keyof ITableData = 'firstname';
   @Input() sortDirection: 'asc' | 'desc' = 'asc';
   @Input() data: ITableData[] = [];
+  @Output() sortChange: EventEmitter<{
+    sortColumn: keyof ITableData;
+    sortDirection: 'asc' | 'desc';
+  }> = new EventEmitter<{
+    sortColumn: keyof ITableData;
+    sortDirection: 'asc' | 'desc';
+  }>();
 
   ngOnChanges(): void {
     this.sortData();
   }
 
   private sortData(): void {
-    // @TODO
-    // console.log('Table data: ', this.data)
+    this.sortChange.emit({
+      sortColumn: this.sortColumn,
+      sortDirection: this.sortDirection,
+    });
   }
 
   sortTable(sortColumn: columns): void {

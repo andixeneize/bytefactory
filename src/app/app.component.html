@@ -1,5 +1,12 @@
 <div class="container">
-  <app-search-box></app-search-box>
+  <app-search-box
+    (searchTermChange)="onSearchTermChange($event)"
+  ></app-search-box>
 
-  <app-table [data]="filteredUserList"></app-table>
+  <app-table
+  [data]="filteredUserList"
+  [sortColumn]="sortColumn"
+  [sortDirection]="sortDirection"
+  (sortChange)="onSortChange($event)"
+></app-table>
 </div>

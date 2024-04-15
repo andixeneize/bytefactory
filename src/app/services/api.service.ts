@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class ApiService {
   constructor(private http: HttpClient) { }
 
-  public getData(): Observable<any> {
+  getData(): Observable<any> {
     return this.http.get('https://jsonplaceholder.typicode.com/users');
   }
 }

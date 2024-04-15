@@ -9,7 +9,7 @@ export class SearchBoxComponent  {
 
   constructor() { }
 
-  public onSearchTermChange(searchTerm: string): void {
+  onSearchTermChange(searchTerm: string): void {
     if (searchTerm !== null) {
       this.searchTermChange.emit(searchTerm);
     }
