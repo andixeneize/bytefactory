@@ -1,9 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-
-export interface ITableData extends Pick<any, 'id' | 'username' | 'email'> {
-  firstname: string;
-  surname: string;
-}
+import { ITableData } from 'src/app/model/user';
 
 type columns = 'firstname' | 'surname' | 'username' | 'email';
 
@@ -15,8 +11,7 @@ type columns = 'firstname' | 'surname' | 'username' | 'email';
 export class TableComponent implements OnChanges {
   @Input() sortColumn: columns = 'firstname';
   @Input() sortDirection: 'asc' | 'desc' = 'asc';
-
-  data: ITableData[] = [];
+  @Input() data: ITableData[] = [];
 
   ngOnChanges(): void {
     this.sortData();
@@ -24,6 +19,7 @@ export class TableComponent implements OnChanges {
 
   private sortData(): void {
     // @TODO
+    // console.log('Table data: ', this.data)
   }
 
   sortTable(sortColumn: columns): void {
