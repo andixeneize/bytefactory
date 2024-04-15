@@ -25,7 +25,22 @@ export class AppComponent implements OnInit {
     this.apiService.getData()
       .pipe(
         map(response => {
-          this.userList = response;
+          this.userList = response.map((user: any) => {
+            const nameParts = user.name.split(' ');
+  
+            // Determinar el índice donde comienza el apellido
+            let surnameStartIndex = 1;
+            if (nameParts.length > 1 && (nameParts[0] === 'Mr.' || nameParts[0] === 'Mrs.')) {
+              surnameStartIndex = 2; // Saltar el prefijo
+            }
+  
+            // Obtener firstname y surname
+            const firstname = nameParts.slice(0, surnameStartIndex).join(' ');
+            const surname = nameParts.slice(surnameStartIndex).join(' ');
+  
+            return { ...user, firstname, surname };
+          });
+
           this.filteredUserList = this.userList;
         }),
         catchError(error => {
